@@ -65,6 +65,7 @@ class TicTacToeGUI:
             self.cells[row][col].config(
                 text=self.current_player,
                 fg='red' if self.current_player == 'X' else 'blue',
+                disabledforeground='red' if self.current_player == 'X' else 'blue',
                 state='disabled'
             )
             self.move_count += 1
@@ -72,7 +73,12 @@ class TicTacToeGUI:
             if self.check_winner():
                 self.show_winner()
             elif self.move_count == 9:
-                self.show_draw()
+                if self.current_player == 'X':
+                    self.show_draw()
+                    self.reset_game(0)
+                else:
+                    self.show_draw()
+                    self.reset_game(1)
             else:
                 self.switch_player()
                 
@@ -104,18 +110,27 @@ class TicTacToeGUI:
         return False
 
     def highlight_winner(self, start_row, start_col, end_row, end_col):
-        # Определяем тип линии
-        if start_row == end_row:  # Горизонтальная линия
+    # Горизонтальная линия
+        if start_row == end_row:
             for col in range(3):
                 self.cells[start_row][col].config(bg='#a5d6a7')
-        elif start_col == end_col:  # Вертикальная линия
+        
+        # Вертикальная линия
+        elif start_col == end_col:
             for row in range(3):
                 self.cells[row][start_col].config(bg='#a5d6a7')
-        else:  # Диагональ
-            if start_row < end_row:  # Главная диагональ
+        
+        # Диагонали
+        else:
+            # Главная диагональ (0,0)-(1,1)-(2,2)
+            if (start_row, start_col, end_row, end_col) == (0, 0, 2, 2) or \
+            (start_row, start_col, end_row, end_col) == (2, 2, 0, 0):
                 for i in range(3):
                     self.cells[i][i].config(bg='#a5d6a7')
-            else:  # Обратная диагональ
+            
+            # Обратная диагональ (0,2)-(1,1)-(2,0)
+            elif (start_row, start_col, end_row, end_col) == (0, 2, 2, 0) or \
+                (start_row, start_col, end_row, end_col) == (2, 0, 0, 2):
                 for i in range(3):
                     self.cells[i][2-i].config(bg='#a5d6a7')
     
@@ -133,11 +148,11 @@ class TicTacToeGUI:
         messagebox.showinfo(
             "Ничья!",
             "Игра завершилась вничью!",
-            parent=self.window
+            parent=self.window 
         )
-        
-    def reset_game(self):
-        self.current_player = 'X'
+
+    def reset_game(self, vs):
+        self.current_player = 'O' if vs == 0 else 'X'
         self.game_board = [[' ' for _ in range(3)] for _ in range(3)]
         self.move_count = 0
         

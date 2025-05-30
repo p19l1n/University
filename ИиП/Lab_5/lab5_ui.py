@@ -18,8 +18,9 @@ class Ui_MainWindow(object):
         self.modeCheckBox = QtWidgets.QCheckBox(parent=self.centralwidget)
         self.modeCheckBox.setGeometry(QtCore.QRect(170, 100, 200, 500))
         self.modeCheckBox.setObjectName("modeCheckBox")
+        self.modeCheckBox.setStyleSheet("color: blue")
         self.actionButton = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.actionButton.setGeometry(QtCore.QRect(250, 230, 115, 40))
+        self.actionButton.setGeometry(QtCore.QRect(200, 230, 115, 40))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(12)
@@ -48,5 +49,5 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.modeCheckBox.setText(_translate("MainWindow", "Активный режим"))
-        self.actionButton.setText(_translate("MainWindow", "Жми"))
+        self.modeCheckBox.setText(_translate("MainWindow", "РђРєС‚РёРІРЅС‹Р№ СЂРµР¶РёРј"))
+        self.actionButton.setText(_translate("MainWindow", "Р–РјРё"))

@@ -3,6 +3,8 @@ import sys
 from PyQt6 import QtCore, QtGui, QtWidgets
 from lab5_ui import Ui_MainWindow
 import math
+import threading
+import configparser
 
 class MyForm(QtWidgets.QMainWindow):
     def __init__(self):
@@ -23,6 +25,10 @@ class MyForm(QtWidgets.QMainWindow):
         self.timer.timeout.connect(self.animate_button)
         self.angle = 0
         self.hue = 0
+
+        self.radius = 20
+        self.center_x = 200
+        self.center_y = 200
 
     def on_button_click(self):
         """Обработчик нажатия кнопки"""
@@ -47,12 +53,13 @@ class MyForm(QtWidgets.QMainWindow):
         current_font.setPointSize(font_size)
         self.ui.modeCheckBox.setFont(current_font)
 
+        self.radius = value * 4
+
     def animate_button(self):
         """Анимация кнопки: движение и изменение цвета"""
-        # Движение по кругу
-        radius = 100
-        x = 200 + radius * math.cos(self.angle)
-        y = 150 + radius * math.sin(self.angle)
+        # Движение по кругу с текущим радиусом
+        x = self.center_x + self.radius * math.cos(self.angle)
+        y = self.center_y + self.radius * math.sin(self.angle)
         self.ui.actionButton.move(int(x), int(y))
         self.angle += 0.1
         
